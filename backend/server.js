@@ -7,14 +7,14 @@ import {
   getUserPromptById,
   updateUserPrompt,
   deleteUserPrompt
-} from './db.js';
+} from './database/db.js';
 
 const app = express();
 dotenv.config();
 
 app.use(express.json());
 
-// Routes for CRUD operations
+
 
 app.post('/prompts', async (req, res) => {
   const { userPrompt, response } = req.body;
@@ -22,7 +22,7 @@ app.post('/prompts', async (req, res) => {
     const newPrompt = await createUserPrompt(userPrompt, response);
     res.status(201).json(newPrompt);
   } catch (error) {
-    console.error('Error creating prompt:', error); // Log the error
+    console.error('Error creating prompt:', error); 
     res.status(500).json({ error: 'Failed to create prompt' });
   }
 });
@@ -32,7 +32,7 @@ app.get('/prompts', async (req, res) => {
     const prompts = await getUserPrompts();
     res.status(200).json(prompts);
   } catch (error) {
-    console.error('Error getting prompts:', error); // Log the error
+    console.error('Error getting prompts:', error); 
     res.status(500).json({ error: 'Failed to get prompts' });
   }
 });
@@ -47,7 +47,7 @@ app.get('/prompts/:id', async (req, res) => {
       res.status(404).json({ error: 'Prompt not found' });
     }
   } catch (error) {
-    console.error('Error getting prompt:', error); // Log the error
+    console.error('Error getting prompt:', error); 
     res.status(500).json({ error: 'Failed to get prompt' });
   }
 });
@@ -63,7 +63,7 @@ app.put('/prompts/:id', async (req, res) => {
       res.status(404).json({ error: 'Prompt not found' });
     }
   } catch (error) {
-    console.error('Error updating prompt:', error); // Log the error
+    console.error('Error updating prompt:', error); 
     res.status(500).json({ error: 'Failed to update prompt' });
   }
 });
@@ -74,12 +74,12 @@ app.delete('/prompts/:id', async (req, res) => {
     await deleteUserPrompt(id);
     res.status(204).send();
   } catch (error) {
-    console.error('Error deleting prompt:', error); // Log the error
+    console.error('Error deleting prompt:', error); 
     res.status(500).json({ error: 'Failed to  delete prompt' });
   }
 });
 
-// Start the server
+
 app.listen(8080, () => {
   console.log('App is listening on port 8080');
 });
