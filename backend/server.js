@@ -1,6 +1,7 @@
 // server.js or main app file
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import {
   createUserPrompt,
   getUserPrompts,
@@ -11,15 +12,15 @@ import {
 
 const app = express();
 dotenv.config();
-
+app.use(cors());
 app.use(express.json());
 
 
 
 app.post('/prompts', async (req, res) => {
-  const { userPrompt, response } = req.body;
+  const { user_id,userPrompt, response } = req.body;
   try {
-    const newPrompt = await createUserPrompt(userPrompt, response);
+    const newPrompt = await createUserPrompt(user_id,userPrompt);
     res.status(201).json(newPrompt);
   } catch (error) {
     console.error('Error creating prompt:', error); 

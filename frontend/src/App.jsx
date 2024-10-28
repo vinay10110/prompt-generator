@@ -1,12 +1,12 @@
 
-import './App.css'
+import Code from './components/Code';
 
 function App() {
   
 
   return (
     <>
-      hihih
+     <Code />
     </>
   )
 }

@@ -6,7 +6,7 @@ import fs from 'fs';
 dotenv.config();
 const isSupabase=process.env.USE_SUPABASE;
 const pool = new Pool({
-  connectionString: isSupabase ? process.env.DATABASE_URL : process.env.DATABASE_LOCAL_URL
+  connectionString:  process.env.DATABASE_URL 
 });
 
 
@@ -21,9 +21,7 @@ const pool = new Pool({
         console.log('SQL file executed successfully.');
       } catch (error) {
         console.error('Error executing SQL file:', error);
-      } finally {
-        await pool.end();
-      }
+      } 
     };
     executeSqlFile('./database/Schema.sql');
   } catch (error) {
@@ -37,11 +35,11 @@ pool.on('error', (error) => {
   console.error('Database connection error:', error.message, error.stack);
 });
 
-export const createUserPrompt = async (userPrompt, response) => {
+export const createUserPrompt = async (user_id, userPrompt) => {
   try {
     const result = await pool.query(
-      'INSERT INTO prompts (user_prompt, response) VALUES ($1, $2) RETURNING *',
-      [userPrompt, response]
+      'INSERT INTO prompt_app.prompts (user_id, prompt_text) VALUES ($1, $2) RETURNING *',
+      [user_id, userPrompt]
     );
     return result.rows[0];
   } catch (error) {
