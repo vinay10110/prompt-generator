@@ -1,21 +1,13 @@
 import create from 'zustand';
 
-const useStore = create((set) => ({
-    cache: {}, 
-
-    
-    setCache: (key, value) => set((state) => ({
-        cache: {
-            ...state.cache,
-            [key]: value,
-        },
-    })),
-
-   
-    getCache: (key) => (state) => state.cache[key],
-
-    
-    clearCache: () => set({ cache: {} }),
-}));
-
-export default useStore;
+const usePromptStore = create((set) => ({
+    prompts: [],
+    addPrompt: (prompt) => set((state) => ({ prompts: [...state.prompts, prompt] })),
+    clearPrompts: () => set({ prompts: [] }),
+  }));
+  const useCreditStore = create((set) => ({
+    user_id: [],
+    addPrompt: (prompt) => set((state) => ({ prompts: [...state.prompts, prompt] })),
+    clearPrompts: () => set({ prompts: [] }),
+  }));
+export default {usePromptStore,useCreditStore};
